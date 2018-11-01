@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta authors="Jaeho Yoo">
+		<meta copyright="Jaeho Yoo All rights reserved">
+		<title>Auto Resume</title>
+		<meta http-equiv="refresh" content="1000">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<section id="resume">
+			<h3> Resume Auto Building Form </h3>
+
+			<!-- <form method="GET" action="pages/resume.js" target="_blank"> -->
+				i. Name <br>
+				Your First Name: <input type="text" id="first_name" /> <br>
+				Your Last Name: <input type="text" id="last_name" /> <br> <br>
+				
+				ii. Image <br>
+				Image Upload: <input type="file" id="myImage" onchange="readURL(this)" src="#" alt="your image"/> <br> <br>
+				
+				iii. Contact Information <br>
+				Email : <input type="email" id="email" placeholder="abc@gmail.com"
+								pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" /> <br>
+				Phone-number: <input type="text" id="phone_number" placeholder="010-1234-5678" 
+								title ="010-1234-5678 형식으로 입력해주세요"/> <br>
+				Personal page (if possible): <input type="url" id="p_page" placeholder="http://"/><br><br>
+				
+				iv. Career goal/objective: <br>
+										<textarea id="career_goal" rows="1" cols="40"></textarea> <br><br>
+				
+				v. Education: 
+					<button id="add_edu_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button> 
+					<button id="delete_edu_field">Delete Last Field &nbsp; <span style="font-size:16px; font-weight:bold;">- </span></button> 
+				<br>
+					<script>
+						$(document).ready(function() {
+						    var max_fields      = 10;
+						    var wrapper         = $("#edu_form"); 
+						    var add_button      = $("#add_edu_field"); 
+						    var delete_button   = $("#delete_edu_field");
+						    
+						    var x = $('#edu_form tbody tr').length;; 
+						    $(add_button).click(function(e){ 
+						        e.preventDefault();
+						        if(x < max_fields){ 
+						        	x++;
+						            $(wrapper).append('<tr><td><input type="text" id="school'+x+'" size="30" value=""/></td> <td><input type="text" id="major'+x+'" size="30" value=""/></td> <td><input type="date" id="addm'+x+'" value=""/></td> <td><input type="date" id="grad'+x+'" value=""/></td> <td><input type="text" id="gpa'+x+'" size="30" value=""/></td><td>'); //add input box
+						        }
+								else
+								{
+								alert('You Reached the limits')
+								}
+						    });
+						    
+						    $(delete_edu_field).click(function(e){ 
+						    	if(x > 1){
+						        	e.preventDefault(); $('#edu_form tr:last').remove(); x--;
+						    	}
+						    	else{
+						    		alert('No entry in a education section!');
+						    	}
+						    })
+						});
+					</script>
+					<table id="edu_form">
+						<thead>
+							<td>School</td>
+							<td>Major</td>
+							<td>Addmission date</td>
+							<td>Graduation date</td>
+							<td>GPA</td>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" id="school1" size="30" placeholder="고려대학교"/></td>
+								<td><input type="text" id="major1" size="30" placeholder="전기전자공학부"/></td>
+								<td><input type="date" id="addm1" size="30" /></td>
+								<td><input type="date" id="grad1" size="30" /></td>
+								<td><input type="text" id="gpa1" size="30" placeholder="4.5"/></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				
+				vi. Experience 
+					<button id="add_org_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+					<button id="delete_org_field">Delete Last Field &nbsp; <span style="font-size:16px; font-weight:bold;">- </span></button> 
+				<br>
+					<script>
+						$(document).ready(function() {
+						    var max_fields      = 10;
+						    var wrapper         = $("#org_form"); 
+						    var add_button      = $("#add_org_field");
+						    var delete_button   = $("#delete_org_field")
+						    
+						    var x = $('#org_form tbody tr').length; 
+						    
+						    $(add_button).click(function(e){ 
+						        e.preventDefault();
+						        if(x < max_fields){
+						        	x++;
+						            $(wrapper).append('<tr><td><input type="text" id="org'+x+'" size="30" value=""/></td> <td><input type="text" id="duty'+x+'" size="30" value=""/></td> <td><input type="date" id="start'+x+'" value=""/></td> <td><input type="date" id="finish'+x+'" value=""/></td></tr>'); //add input box
+						        }
+								else
+								{
+								alert('You Reached the limits')
+								}
+						    });
+						    
+						    $(delete_org_field).click(function(e){ 
+						    	if(x > 1){
+						        	e.preventDefault(); $('#org_form tr:last').remove(); x--;
+						    	}
+						    	else{
+						    		alert('No entry in a experience section!');
+						    	}
+						    })
+						});
+					</script>
+					<table id="org_form">
+						<thead>
+							<td>Organization</td>
+							<td>Role</td>
+							<td>Duration </td>
+							<td> </td>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" id="org1" size="30"/></td>
+								<td><input type="text" id="duty1" size="30"/></td>
+								<td><input type="date" id="start1" size="30"/> ~ </td>
+								<td><input type="date" id="finish1" size="30"/></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+
+					vii. Skills 
+						<button id="add_skills_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+						<button id="delete_skills_field">Delete New Field &nbsp; <span style="font-size:16px; font-weight:bold;">- </span></button>
+					<br>
+					<script>
+						$(document).ready(function() {
+						    var max_fields      = 10;
+						    var wrapper         = $("#skills_form"); 
+						    var add_button      = $("#add_skills_field"); 
+						    var delete_button   = $("#delete_skills_field")
+						    
+						    var x = $('#skills_form tbody tr').length; 
+						    $(add_button).click(function(e){ 
+						        e.preventDefault();
+						        if(x < max_fields){ 
+						            x++; 
+						            $(wrapper).append('<tr><td><input type="text" id="name'+x+'" size="30"/></td> <td><select id="level'+x+'" size="1"> <option value="expert" selected>Expert</option> <option value="intermediate">Intermediate</option> <option value="novice">Novice</option></select></td> <td><input type="text" id="detail'+x+'" size="50"/></td></tr>'); //add input box
+						        }
+								else
+								{
+								alert('You Reached the limits')
+								}
+						    });
+						    
+						    $(delete_skills_field).click(function(e){ 
+						    	if(x > 1){
+						        	e.preventDefault(); $('#skills_form tr:last').remove(); x--;
+						    	}
+						    	else{
+						    		alert('No entry in a skills section!');
+						    	}
+						    })
+						});
+					</script>
+					<table id="skills_form">
+						<thead>
+							<td>Skill Name</td>
+							<td>Skill Level</td>
+							<td>Details</td>
+							<td> </td>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" id="name1" size="30"/></td>
+								<td><select id="level1" size="1">
+									<option value="expert" selected>Expert</option>
+									<option value="intermediate">Intermediate</option>
+									<option value="novice">Novice</option></select></td>
+								<td><input type="text" id="detail1" size="50"/></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+
+					viii. Others
+					<table>
+						<tr><td>Background color</td><td><input type="color" id="bgcolor" value="#ffffff" /></td></tr>
+						<tr><td>Font color</td><td><input type="color" id="fcolor"/></td></tr>
+						<!-- <tr><td>Font color</td><td><input type="color" id="fcolor"/></td></tr> -->
+
+						<tr><td>Font size</td><td>0em<input type="range" id="fsize" min="0" max="3" value="1" step="0.1"/>3em
+						</td></tr> 
+					</table>
+
+			<hr>
+			<input type="submit" value="Submit" name="submit" onClick="showResume();"/>
+			<input type="reset" value="Clear" name="clear" onClick="reset"/>
+			</form>
+		</section>
+
+	<script type="text/javascript">
+		function toggleVisibility(id) {
+			var dom = document.getElementById(id);
+			if(dom.style.visibility != "hidden"){
+				dom.style.visibility = "hidden";
+				dom.style.height="0px";
+			}
+			else if(dom.style.visibility == "hidden"){
+				dom.style.visibility = "visible";
+				dom.style.height="auto";
+			}
+		}
+
+	     function readURL(input) {
+	          if(input.files && input.files[0]) {
+	               var reader = new FileReader();
+	               reader.onload = function (e) {
+	                    $('#resume_photo').attr('src', e.target.result);
+	               }
+	               reader.readAsDataURL(input.files[0]);
+	          }
+	     }
+	</script>
+
+	<script type="text/javascript">
+		function showResume(){
+
+			// Receiving data  -------------------------------------------------
+			var first_name = document.getElementById("first_name").value;
+			var last_name = document.getElementById("last_name").value;
+			var email = document.getElementById("email").value;
+			var phone_number = document.getElementById("phone_number").value;
+			var p_page = document.getElementById("p_page").value;
+			var career_goal = document.getElementById("career_goal").value;
+			
+			var edu_length = $('#edu_form tbody tr').length;
+			var exp_length = $('#org_form tbody tr').length;
+			var ski_length = $('#skills_form tbody tr').length;
+
+			var bg = document.getElementById("bgcolor").value;
+			var fc = document.getElementById("fcolor").value;
+			var fs = document.getElementById("fsize").value; fs += "em";
+
+
+			var education="";
+			for(i = 1; i < edu_length+1; i++){
+				var id_school = "school" + i;
+				education +=  document.getElementById(id_school).value;
+				var id_major = "major" + i;
+				education += document.getElementById(id_major).value;
+				var id_addm = "addm" + i;
+				education +=  "  ("+document.getElementById(id_addm).value;
+				var id_grad = "grad" + i;
+				education +=  "~"+document.getElementById(id_grad).value;
+				var id_gpa = "gpa" + i;
+				education +=  ")  GPA: "+document.getElementById(id_gpa).value;
+				education += "<br>"; 
+			}
+
+			var experience="";
+			for(i = 1; i < exp_length+1; i++){
+				var id_organization = "org" + i;
+				experience +=  document.getElementById(id_organization).value+" ";
+				var id_duty = "duty" + i;
+				experience += document.getElementById(id_duty).value;
+				var id_start = "start" + i;
+				experience +=  "  ("+document.getElementById(id_start).value;
+				var id_finish = "finish" + i;
+				experience +=  "~"+document.getElementById(id_finish).value+")";
+				experience += "<br>"; 
+			}
+
+			var skill="";
+			for(i = 1; i < ski_length+1; i++){
+				var id_name = "name" + i;
+				skill +=  document.getElementById(id_name).value;
+				var id_level = "level" + i;
+				skill += " - "+document.getElementById(id_level).value;
+				var id_detail = "detail" + i;
+				skill +=  "  ("+document.getElementById(id_detail).value+")";
+				skill += "<br>"; 
+			}
+
+			
+			// Update the page -------------------------------------------------
+			document.getElementById("resume_name").innerHTML = last_name+" "+first_name;
+			document.getElementById("resume_phone").innerHTML = phone_number; 
+			document.getElementById("resume_email").innerHTML = email; 
+			document.getElementById("resume_p_page").innerHTML = p_page;
+
+			document.getElementById("resume_obj").innerHTML = career_goal;
+
+			document.getElementById("resume_edu").innerHTML = education;
+			document.getElementById("resume_exp").innerHTML = experience;
+			document.getElementById("resume_ski").innerHTML = skill;
+
+			document.getElementById("result").style.backgroundColor = bg;
+			document.getElementById("result").style.color = fc;
+			document.getElementById("forFontSize").style.fontSize = fs;
+
+			// Show Result page  -----
+			toggleVisibility("resume");
+			toggleVisibility("result");
+			toggleVisibility("bottom");
+		}
+		
+	</script>
+
+	<!-- Result page  -->
+	<section id="result" style="width: 70%; border: 1px solid black; margin: 40px auto; visibility: hidden; height: 0px; width: 800px;">
+		<div style="text-align: center;">
+			<h3>Resume</h3>
+			<hr>
+		</div>
+		<div id ="forFontSize">
+		<div style="display:inline-block">
+			<div style="height: auto; width: 150px; float: left; margin: 5px 10px">
+				<img id="resume_photo" src="" alt="사진" style="width:auto;height:150px;"/>
+			</div>
+			<div style="float: left; margin: 3px 3px">
+				<strong><u><p id="resume_name" style="margin: 1px">이름</p></u></strong>
+				<span><STRONG>&nbsp; Contact & Address </STRONG></span><br>
+				<span>&nbsp; Phone No : </span><span id="resume_phone">Phone</span><br>
+				<span>&nbsp; E-mail : </span><span id="resume_email">E-mail</span><br>
+				<span>&nbsp; Web Page URL : </span><span id="resume_p_page">URL</span><br>
+			</div>
+		</div>
+		<div style="margin: 3px 10px">
+			<hr>
+			<span><STRONG>&nbsp; Objective</STRONG></span><br>
+			<p id="resume_obj">Objective</p>
+			<hr>
+			<span><STRONG>&nbsp; Education</STRONG> </span>
+			<p id="resume_edu">Education</p>
+			<hr>
+			<span><STRONG>&nbsp; Experience</STRONG> </span>
+			<p id="resume_exp">Experience</p>
+			<hr>
+			<span><STRONG>&nbsp; Skills</STRONG> </span>
+			<p id="resume_ski">Skill</p>
+			<hr>
+		</div>
+		</div>
+
+	</section>
+
+	<!-- Bottom navigation bar -->
+	<section id="bottom" style="width: 70%; margin: 40px auto; visibility: hidden; height: 0px; width: 800px;">
+		<h4> **Please allow "Allow Editing" to see the image inside the document** </h4> 
+		<button onclick="goBack();"> Return </button>
+		<button onclick="Export2Doc('result');">Export as .doc document</button>
+	</section>
+
+	<!-- Svaing to doc file -->
+	<script>
+		function goBack(){
+			toggleVisibility("resume");
+			toggleVisibility("result");
+			toggleVisibility("bottom");
+		}
+		function prompFileName(){
+			var filename = prompt("Please enter file name", "resume.docx");
+			return 	filename;
+		}
+		function Export2Doc(element, filename = prompFileName()){
+
+	    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+	    var postHtml = "</body></html>";
+	    var html = preHtml+document.getElementById(element).innerHTML+postHtml;
+
+	    var blob = new Blob(['\ufeff', html], {
+	        type: 'application/msword'
+	    });
+	    
+	    // Specify link url
+	    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+	    
+	    // Specify file name
+	    filename = filename?filename+'.doc':'document.doc';
+	    
+	    // Create download link element
+	    var downloadLink = document.createElement("a");
+
+	    document.body.appendChild(downloadLink);
+	    
+	    if(navigator.msSaveOrOpenBlob ){
+	        navigator.msSaveOrOpenBlob(blob, filename);
+	    }else{
+	        // Create a link to the file
+	        downloadLink.href = url;
+	        
+	        // Setting the file name
+	        downloadLink.download = filename;
+	        
+	        //triggering the function
+	        downloadLink.click();
+	    }
+	    
+	    document.body.removeChild(downloadLink);
+	}
+	</script>
+	
+	</body>
+</html>
