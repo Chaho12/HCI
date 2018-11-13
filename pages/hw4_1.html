@@ -1,1 +1,237 @@
-hw4.html
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta authors="Jaeho Yoo">
+		<meta copyright="Jaeho Yoo All rights reserved">
+		<title>GUI Elements</title>
+		<meta http-equiv="refresh" content="100">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+	</head>
+	<body>
+		<canvas id="canvas"></canvas>
+		<!-- 처음 패이지 로딩 시 -->
+		<script>
+			var canvas = document.getElementById('canvas');
+			var ctx = canvas.getContext('2d');
+			var itemList = [];
+			var menuList = [];
+			var counter = 0;
+
+			window.onload = function() {
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
+			 	
+			 	// window.addEventListener('resize', resizeCanvas, false);
+			 	canvas.addEventListener('mousedown', button_function, false);
+
+			 	create_window("win1", 10, 10, 400, 400, "My_window"); 	
+			 	
+			 	create_textbox("txtbox1", 460, 10, 200, 100, "My_text_box_1", "Arial", 25);
+			 	create_textbox("txtbox2", 700, 100, 150, 150, "My_text_box_2", "Georgia", 20);
+
+			 	create_button("btn1", 10, 500, 150, 50, "My_button_1", "Times New Roman", 21);
+			 	create_button("btn2", 250, 500, 150, 50, "My_button_2", "Mangal", 18);
+
+			 	create_menu("menu1", 500, 500, 120, 50, "My_menu_1", "Courier New", 18, ["item1", "item2", "item3"]);
+				// resizeCanvas();
+				// alert("counter:" + counter);
+			}
+
+			
+		</script>
+
+		<!-- Window -->
+		<script type="text/javascript">
+
+			function button_function(){
+				var x = event.x;
+				var y = event.y;
+	
+				var height = 400;
+				var width = 400;
+				var btn_width = height/20;
+				var btn_height = btn_width;
+				// alert("x:" + x + " y:" + y + " height:" + height + " width: " + width);
+				// X
+				if( x > width - btn_width && x < width && y > height - btn_height && y < height){
+					// canvas.remove();
+					ctx.clearRect(9,9,402,402);
+					// alert("x");
+				}
+				// -
+				if( x > width - 2*btn_width && x < width - btn_width && y > height - btn_height && y < height){
+					// alert("-");
+					
+					var p = ctx.getImageData(width/2, height/2, 1, 1).data;
+					var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+					// alert("hex:" + hex);
+					if(hex != '#ffffff'){
+						ctx.fillStyle = "white";
+					}else{
+						ctx.fillStyle = "LightBlue";
+					}
+					ctx.fillRect(10, 11 + height/10 + 20, width, height-(height/10 + 20));
+
+					ctx.strokeStyle = "black";
+					ctx.strokeRect(width - btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+					ctx.strokeRect(width - 2 * btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+
+					ctx.fillStyle = "black";
+					ctx.font = "20px Arial";
+					ctx.fillText("X", width - btn_width, height - btn_height, btn_width, btn_height)
+					ctx.fillText("-", width - 2 * btn_width, height - btn_height, btn_width, btn_height)
+					
+				}
+
+			}	
+			function rgbToHex(r, g, b) {
+			    if (r > 255 || g > 255 || b > 255)
+			        throw "Invalid color component";
+			    return ((r << 16) | (g << 8) | b).toString(16);
+			}			
+
+			function create_window(ID, pos_x, pos_y, width, height, title) {
+				itemList[counter] = ID;
+				counter++;
+	
+				ctx.fillStyle = "LightBlue";
+				ctx.fillRect(pos_x, pos_y, width, height);
+				ctx.fillStyle = "White";
+				ctx.font = "30px Arial";
+				ctx.textAlign="center"; ctx.textBaseline="middle"; 
+				ctx.fillText(title, pos_x + width/2, pos_y + height/10);
+
+				// line
+				ctx.strokeStyle = "black";
+				ctx.strokeRect(pos_x, pos_y+height/10+20, width, 0.5);
+
+				// Buttons X -
+				var btn_width = height/20;
+				var btn_height = btn_width;
+
+				ctx.strokeStyle = "black";
+				ctx.strokeRect(width - btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+				ctx.strokeRect(width - 2 * btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+
+				ctx.fillStyle = "black";
+				ctx.font = "20px Arial";
+				ctx.fillText("X", width - btn_width, height - btn_height, btn_width, btn_height)
+				ctx.fillText("-", width - 2 * btn_width, height - btn_height, btn_width, btn_height)
+
+			}
+
+			// 아직 사용 안 함
+			function resizeCanvas(){
+				var oldcanv = document.getElementById('canvas');
+				oldcanv.remove();
+
+				create_window("win1", 10, 10, window.innerWidth/2, window.innerHeight/2, "My_Window");
+				create_textbox("txtbox1", 10, 10, window.innerWidth/10 * 2, window.innerHeight/10, "My_text_box_1", "Arial", 20);
+				create_textbox("txtbox2", 10, 10, window.innerWidth/8, window.innerHeight/8, "My_text_box_2", "Georgia", 15);
+	            
+	        }
+		</script>
+
+		<!-- Text Box -->
+		<script>
+			function create_textbox(ID, pos_x, pos_y, width, height, title, font, textSize){
+				itemList[counter] = ID;
+				counter++; 
+
+				ctx.fillStyle = "LightBlue";
+				ctx.fillRect(pos_x, pos_y, width, height);
+				ctx.fillStyle = "White";
+				ctx.font = textSize.toString()+"px "+font;
+				ctx.textAlign="center"; ctx.textBaseline="middle"; 
+				ctx.fillText(title, pos_x + width/2, pos_y + height/2);
+				
+			}
+		</script>
+		
+		<!-- Button -->
+		<script>
+			function create_button(ID, pos_x, pos_y, width, height, title, font, textSize){
+				itemList[counter] = ID;
+				counter++;
+
+				ctx.fillStyle = "LightBlue";
+				ctx.roundRect(pos_x, pos_y, width, height, {upperLeft:10,upperRight:10,lowerLeft:10, lowerRight:10}, 1, true);
+				// ctx.fillRect(pos_x, pos_y, width, height);
+
+				ctx.fillStyle = "White";
+				ctx.font = textSize.toString()+"px "+font;
+				ctx.textAlign="center"; ctx.textBaseline="middle"; 
+				ctx.fillText(title, pos_x + width/2, pos_y + height/2);
+
+				
+			}
+
+			// Round edges
+			CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius, fill, stroke) {
+			    var cornerRadius = { upperLeft: 0, upperRight: 0, lowerLeft: 0, lowerRight: 0 };
+			    if (typeof stroke == "undefined") {
+			        stroke = true;
+			    }
+			    if (typeof radius === "object") {
+			        for (var side in radius) {
+			            cornerRadius[side] = radius[side];
+			        }
+			    }
+
+			    this.beginPath();
+			    this.moveTo(x + cornerRadius.upperLeft, y);
+			    this.lineTo(x + width - cornerRadius.upperRight, y);
+			    this.quadraticCurveTo(x + width, y, x + width, y + cornerRadius.upperRight);
+			    this.lineTo(x + width, y + height - cornerRadius.lowerRight);
+			    this.quadraticCurveTo(x + width, y + height, x + width - cornerRadius.lowerRight, y + height);
+			    this.lineTo(x + cornerRadius.lowerLeft, y + height);
+			    this.quadraticCurveTo(x, y + height, x, y + height - cornerRadius.lowerLeft);
+			    this.lineTo(x, y + cornerRadius.upperLeft);
+			    this.quadraticCurveTo(x, y, x + cornerRadius.upperLeft, y);
+			    this.closePath();
+			    if (stroke) {
+			        this.stroke();
+			    }
+			    if (fill) {
+			        this.fill();
+			    }
+			}
+			
+		</script>
+
+		<!-- Menu -->
+		<script>
+			function create_menu(ID, pos_x, pos_y, width, height, title, font, textSize, items){
+				itemList[counter] = ID;
+				counter++;
+
+				ctx.fillStyle = "LightBlue";
+				ctx.fillRect(pos_x, pos_y, width, height);
+				ctx.fillStyle = "White";
+				ctx.font = textSize.toString()+"px "+font;
+				ctx.textAlign="center"; ctx.textBaseline="middle"; 
+				ctx.fillText(title, pos_x + width/2, pos_y + height/2);
+
+				for(var i = 0; i<items.length; i++){
+					menuList[i] = items[i];
+					// line
+					ctx.strokeStyle = "black";
+					ctx.strokeRect(pos_x +width/20, pos_y +(i+1)*height, width, 0.1);
+
+					// menu boxes
+					ctx.fillStyle = "LightBlue";
+					ctx.fillRect(pos_x + width/20, pos_y + (i+1)*height, width, height);
+					ctx.fillStyle = "White";
+					ctx.font = (textSize-2).toString()+"px "+font;
+					ctx.textAlign="center"; ctx.textBaseline="middle"; 
+					ctx.fillText(items[i], pos_x + width/2, pos_y + height/2 + (i+1)*height);
+				}
+				
+			}			
+		</script>
+	</body>
+
+</html>

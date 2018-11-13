@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta authors="Jaeho Yoo">
+    <meta copyright="Jaeho Yoo All rights reserved">
+    <title>GUI Elements</title>
+    <meta http-equiv="refresh" content="100">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  </head>
+  <body>
+    
+    <!-- 처음 패이지 로딩 시 -->
+    <script>
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+
+      window.onload = function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', resizeCanvas, false);
+
+        create_window("win1", 10, 10, 400, 400, "My_window");   
+        
+        create_textbox("txtbox1", 460, 10, 200, 100, "My_text_box_1", "Arial", 20);
+        create_textbox("txtbox2", 600, 700, 200, 100, "My_text_box_2", "Georgia", 15);
+        resizeCanvas();
+      }
+      
+    </script>
+
+    <!-- Window -->
+    <script type="text/javascript">
+
+      function button_function(){
+        var x = event.x;
+        var y = event.y;
+        // var canvas = document.getElementById("win1");
+
+        var height = canvas.height;
+        var width = canvas.width;
+        var btn_width = height/20;
+        var btn_height = btn_width;
+        // alert("x:" + x + " y:" + y + " height:" + height + " width: " + width);
+        // X
+        if( x > width - btn_width && x < width && y > height - btn_height && y < height){
+          // canvas.remove();
+          ctx.clearRect(10,10,400,400);
+          // alert("x");
+        }
+        // -
+        if( x > width - 2*btn_width && x < width - btn_width && y > height - btn_height && y < height){
+          // alert("-");
+          // var ctx = canvas.getContext('2d');
+          var p = ctx.getImageData(width/2, height/2, 1, 1).data;
+          var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+          // alert("hex:" + hex);
+          if(hex != '#000000'){
+            ctx.fillStyle = "white";
+            ctx.clearRect(0, height/10 + 20, width, height);
+
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(width - btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+            ctx.strokeRect(width - 2 * btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+
+            ctx.fillStyle = "black";
+            ctx.font = "20px Arial";
+            ctx.fillText("X", width - btn_width, height - btn_height, btn_width, btn_height)
+            ctx.fillText("-", width - 2 * btn_width, height - btn_height, btn_width, btn_height)
+            
+          }else{
+            resizeCanvas();
+          }
+          
+        }
+
+      } 
+      function rgbToHex(r, g, b) {
+          if (r > 255 || g > 255 || b > 255)
+              throw "Invalid color component";
+          return ((r << 16) | (g << 8) | b).toString(16);
+      }     
+
+      function create_window(ID, pos_x, pos_y, width, height, title) {
+        // var x = document.createElement("CANVAS");
+
+        // x.width = width;
+        // x.height = height;
+        // // x.style.border = "thin solid black";
+        // x.id = ID;
+
+        // var ctx = x.getContext('2d');
+        
+        ctx.fillStyle = "LightBlue";
+        ctx.fillRect(pos_x, pos_y, width, height);
+        ctx.fillStyle = "White";
+        ctx.font = "20px Arial";
+        ctx.textAlign="center"; ctx.textBaseline="middle"; 
+        ctx.fillText(title, width/2, height/10);
+
+        // line
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(pos_x, pos_y+height/10+20, width, 1);
+
+        // Buttons X -
+        var btn_width = height/20;
+        var btn_height = btn_width;
+
+        ctx.strokeStyle = "black";
+        ctx.strokeRect(width - btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+        ctx.strokeRect(width - 2 * btn_width - 10, height - btn_height - 10, btn_width, btn_height);
+
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText("X", width - btn_width, height - btn_height, btn_width, btn_height)
+        ctx.fillText("-", width - 2 * btn_width, height - btn_height, btn_width, btn_height)
+
+        // document.body.appendChild(x);
+
+        // var win1 = document.getElementById("win1");
+        // win1.addEventListener("mousedown", button_function, false);
+      }
+
+      function resizeCanvas(){
+        var oldcanv = document.getElementById('win1');
+        oldcanv.remove();
+
+        var txtbox1 = document.getElementById('txtbox1');
+        txtbox1.remove()
+
+        var txtbox2 = document.getElementById('txtbox2');
+        txtbox2.remove()
+
+        create_window("win1", 10, 10, window.innerWidth/2, window.innerHeight/2, "My_Window");
+        create_textbox("txtbox1", 10, 10, window.innerWidth/10 * 2, window.innerHeight/10, "My_text_box_1", "Arial", 20);
+        create_textbox("txtbox2", 10, 10, window.innerWidth/8, window.innerHeight/8, "My_text_box_2", "Georgia", 15);
+              
+          }
+    </script>
+
+    <!-- Text Box -->
+    <script>
+      function create_textbox(ID, pos_x, pos_y, width, height, title, font, textSize){
+        var y = document.createElement("CANVAS");
+        
+        y.width = width;
+        y.height = height;
+
+        y.style.border = "thin solid black";
+        y.id = ID;
+
+        var ctx = y.getContext('2d');
+
+        ctx.fillStyle = "LightBlue";
+        ctx.fillRect(0, 0, width, height);
+        ctx.fillStyle = "White";
+        ctx.font = textSize.toString()+"px "+font;
+        ctx.textAlign="center"; ctx.textBaseline="middle"; 
+        ctx.fillText(title, width/2, height/10);
+        
+        document.body.appendChild(y);
+      }
+    </script>
+    
+    <!-- Button -->
+    <script>
+      
+    </script>
+
+    <!-- Menu -->
+    <script>
+      
+    </script>
+  </body>
+
+</html>
