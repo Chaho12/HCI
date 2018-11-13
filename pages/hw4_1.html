@@ -59,6 +59,7 @@
 				if( x > width - btn_width && x < width && y > height - btn_height && y < height){
 					// canvas.remove();
 					ctx.clearRect(9,9,402,402);
+					canvas.removeEventListener('mousedown', button_function, false);
 					// alert("x");
 				}
 				// -
