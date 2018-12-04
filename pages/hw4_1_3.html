@@ -53,9 +53,9 @@
 
 				// tree.delete_node('tb', 'point', tree.traverseBF);
 				
-				// tree.print_tree();
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 				tree.print_tree_new();
 				tree2.print_tree_new();
 
@@ -65,9 +65,6 @@
 
 			 	canvas.addEventListener('mousedown', button_function, false);
 
-			 	
-				// resizeCanvas();
-				// alert("hmm");
 			}
 			
 		</script>
@@ -76,9 +73,7 @@
 			var selected = false;
 			function button_function(){
 				selected = false;
-				// var x = event.x;
-				// var y = event.y;
-				
+
 				recurse(tree._root);
 				selected = false;
 				recurse(tree2._root);
@@ -102,12 +97,10 @@
 					&& currentNode.y + rect.top < y && y < currentNode.y + rect.top+ size_y){
 
 					for(var i = 0; i< currentNode.children.length; i++){
-						// alert(currentNode.data+" selected at coordinate " + "x: "+x+" y:"+y);
 						recurse(currentNode.children[i]);
 					}
-					// alert(" && currentNode.children.length: " + currentNode.children.length);
-					if(!selected){
-						
+		
+					if(!selected)
 						alert(currentNode.data+" selected at coordinate " + "x: "+x+" y:"+y);
 						selected = true;
 					}
