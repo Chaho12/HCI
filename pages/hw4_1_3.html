@@ -5,85 +5,62 @@
 		<meta charset="UTF-8">
 		<meta authors="Jaeho Yoo">
 		<meta copyright="Jaeho Yoo All rights reserved">
-		<title>Tree Data Structure using JS</title>
+		<title>Tree-Graphics program using JS</title>
 		<meta http-equiv="refresh" content="1000">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 	</head>
 	<body>
-		<h3> Tree Data Structure using JavaScript </h3>
+		<h3> Tree-Graphics program using JavaScript </h3>
 		<br> Tree Data Structure를 구현하는데 어려움이 있어서 다음 사이트를 참고하였습니다.
 		<br> <a href="https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393"> https://code.tutsplus.com/articles/data-structures-with-javascript-tree--cms-23393 </a><br>
 		
 		<hr>
-			<h4> Readme </h4>
-			<p style="margin-left: 1.0em; padding: 0 7em 1em 0;border-width: 1px; border-color: LightBlue; border-style:solid;">
-				This page is first loaded with dummy tree data as shown below. In order to perform basic methods/procedures, first copy and paste the below code to console<br><br>
-				
-				tree = new Tree('text box', canvas.width/2, 100, 1); <br>
-
-				tree._root.children.push(new Node('child1', 'line', canvas.width/2 - 150, 100+100, 2)); <br>
-				tree._root.children[0].parent = tree; <br>
-
-				tree._root.children.push(new Node('child2', 'button', canvas.width/2, 100+100, 3 )); <br>
-				tree._root.children[1].parent = tree; <br>
-
-				tree._root.children.push(new Node('child3', 'point', canvas.width/2 + 150, 100+100, 4)); <br>
-				tree._root.children[2].parent = tree; <br>
-
-				<br><br>
-				Here are some sample command examples <br><br>
-				tree.print_tree(); <br>
-
-				tree.add_node('tb', 'point', 'child4', canvas.width/2 + 150, 100+200, 1, tree.traverseBF); <br>
-
-				tree.delete_node('tb', 'point', tree.traverseBF); <br>
-
-				tree.search_node('child3'); <br>
-			</p>
-			<h6> *Note* &nbsp;tree.print_tree is not nessary as you can manually press "Refresh Tree" button instead of typing command </h6>
-
-		<hr>
-
-		<button type="button" onclick="updateTree()">Refresh Tree!</button>
-		<br>
 		<canvas id="canvas"></canvas>
 
 		<script>
 			var canvas = document.getElementById('canvas');
 			var ctx = canvas.getContext('2d');
 			var tree = null;
+			var tree2 = null;
 
 			window.onload = function() {
-				canvas.width = window.innerWidth * 4/5;
-				canvas.height = window.innerHeight * 4/5;
+				canvas.width = window.innerWidth;
+				canvas.height = window.innerHeight;
 				
 			 	/*
 			 	tree는 : data, x, y, graphic element
 			 	node는 : id, data, x, y, graphic element
-			 	graphic element 값 1: text box, 2: line, 3: button, 4: point
+			 	graphic element 값 1: big text box, 2: line, 3: button, 4: point 5: big button
 			 	*/
-				tree = new Tree('text box', canvas.width/2, 100, 1);
+				tree = new Tree(' ', canvas.width/4, 100, 1);
+				tree2 = new Tree(' ', canvas.width/8, 350, 1);
 				
-				tree._root.children.push(new Node('child1', 'line', canvas.width/2 - 150, 100+100, 2));
+				tree._root.children.push(new Node('child1', 'small_button', canvas.width/2 - 150, 100+100, 3));
 				tree._root.children[0].parent = tree;
 
-				tree._root.children.push(new Node('child2', 'button', canvas.width/2, 100+100, 3 ));
+				tree._root.children.push(new Node('child2', 'big_button', canvas.width/2, 100+50, 5 ));
 				tree._root.children[1].parent = tree;
 
-				tree._root.children.push(new Node('child3', 'point', canvas.width/2 + 150, 100+100, 4));
-				tree._root.children[2].parent = tree;
-
-				// data, toData, id, x, y, ge traversal
-				tree.add_node('tb', 'point', 'child4', canvas.width/2 + 150, 100+200, 1, tree.traverseBF);
-
-				tree.delete_node('tb', 'point', tree.traverseBF);
+				// tree.add_node('circle', 'big_button', 'child3', canvas.width/2 + 100, 100+100, 4, tree.traverseBF);
 				
-				tree.print_tree();
+				tree._root.children[1].push(new Node('child3', 'circle', canvas.width/2 + 100, 100+100, 4));
+				// tree._root.children[1].children[0].parent = tree._root.children[1];
+
+				// // data, toData, id, x, y, ge traversal
+				// tree.add_node('tb', 'point', 'child4', canvas.width/2 + 150, 100+200, 1, tree.traverseBF);
+
+				// tree.delete_node('tb', 'point', tree.traverseBF);
+				
+				// tree.print_tree();
+				tree.print_tree_new();
+				tree2.print_tree_new();
 
 				// tree.search_node('child3');
 			 	// window.addEventListener('resize', resizeCanvas, false);
 			 	// canvas.addEventListener('mousedown', redraw, false);
+
+			 	canvas.addEventListener('mousedown', button_function, false);
 
 			 	
 				// resizeCanvas();
@@ -93,10 +70,57 @@
 		</script>
 
 		<script type="text/javascript">
-			function updateTree(){
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-				tree.print_tree();
+			function button_function(){
+				var x = event.x;
+				var y = event.y;
+
+				alertSelection(x,y);
+				// alert("clicked at loc: "+"x:" + x + " y:" + y);
 			}
+
+			function alertSelection(x, y){
+				var rect = canvas.getBoundingClientRect();
+
+				var root_node = tree._root;
+				if(root_node.x + rect.left < x && x < root_node.x + rect.left + 500
+					&& root_node.y + rect.top < y && y < root_node.y + rect.top+ 300){
+					// alert(x+" "+y);
+					if(root_node.children.length != 0){
+						for (var i = 0, length = root_node.children.length; i < length; i++) {
+							// render_canvas(node.children[i]);
+							let child_node = root_node.children[i];
+							let size_x, size_y;
+							let ge = child_node.graphic_element
+							if(ge == 1){ size_x = 500; size_y = 300}
+							if(ge == 2){ size_x = 100; size_y = 0}
+							if(ge == 3){ size_x = 100; size_y = 50}
+							if(ge == 4){ size_x = 20; size_y = 20}
+							if(ge == 5){ size_x = 200; size_y = 150}
+
+							if(child_node.x + rect.left < x && x < child_node.x + rect.left + size_x
+								&& child_node.y + rect.top < y && y < child_node.y + rect.top+ size_y){
+								if(child_node.children.length != 0){
+
+								}else{
+									alert(child_node.data+" selected at coordinate " + "x: "+x+" y:"+y);
+								}
+							}
+
+						}
+
+					}
+					// alert("root node selected at coordinate " + "x: "+x+" y:"+y);
+
+				}
+				var root_node2 = tree2._root;
+				// alert(root_node2.x + rect.left +" "+ root_node2.y + rect.top);
+				if(root_node2.x + rect.left < x && x < root_node2.x + rect.left + 500
+					&& root_node2.y + rect.top < y && y < root_node2.y + rect.top+ 300){
+					alert(x+" "+y);
+				}
+
+			}
+
 			function Node(id, data, x, y, ge) {
 				this.id = id;
 			    this.data = data;
@@ -137,6 +161,21 @@
 				})
 
 			}
+
+			Tree.prototype.print_tree_new = function(){
+				var node = this._root;
+				render_canvas(node);
+				if(node.children.length != 0){
+					for (var i = 0, length = node.children.length; i < length; i++) {
+						render_canvas(node.children[i]);	
+						alert("node.children["+i+"].length"+node.children[i].length);
+					}
+					// for (var i = 0, length = node.children[1].length; i < length; i++) {
+					// 	render_canvas(node.children[0].children[i]);	
+					// }
+				}				
+			}
+
 			//graphic element 1: text box, 2: line, 3: button, 4: point
 			function render_canvas(node) {
 				switch(node.graphic_element){
@@ -150,7 +189,10 @@
 						draw_bt(node.x, node.y, node.data)
 						break;
 					case 4:
-						draw_pt(node.x, node.y, node.data)
+						draw_circle(node.x, node.y, node.data)
+						break;
+					case 5:
+						draw_bigBt(node.x, node.y, node.data)
 						break;
 					default:
 						alert("render_canvas problem");
@@ -158,50 +200,49 @@
 			}
 			//draw textbox
 			function draw_tb (x, y, data){
-				ctx.fillStyle = "LightBlue";
-				ctx.fillRect(x, y, 100, 50);
-				ctx.fillStyle = "White";
-				ctx.font = "20px Times New Roman";
-				ctx.textAlign="center"; ctx.textBaseline="middle"; 
-				ctx.fillText(data, x + 100/2, y + 50/2);
+
+				ctx.beginPath();
+				ctx.lineWidth="3";
+				ctx.strokeStyle = "black";
+				ctx.rect(x, y, 500, 300);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.fillStyle = "lightblue";
+				ctx.fillRect(x+2, y+2, 500-4, 300-4);
+				// ctx.stroke();
+				
 			}
 			//draw line
 			function draw_line (x, y, data){
 				ctx.beginPath();
 				ctx.moveTo(x,y+50/2);
 				ctx.lineTo(x+100, y+50/2);
-				ctx.lineWidth = 5;
+				ctx.lineWidth = 3;
 
-				ctx.strokeStyle = "LightBlue";
+				ctx.strokeStyle = "black";
 				ctx.stroke();
-				
-				ctx.fillStyle = "Black";
-				ctx.font = "20px Times New Roman";
-				ctx.textAlign="center"; ctx.textBaseline="middle"; 
-				ctx.fillText(data, x + 100/2, y);
+			
 			}
 			//draw button
 			function draw_bt (x, y, data){
 				ctx.fillStyle = "LightBlue";
 				ctx.roundRect(x, y, 100, 50, {upperLeft:10,upperRight:10,lowerLeft:10, lowerRight:10}, 1, true);
 
-				ctx.fillStyle = "White";
-				ctx.font = "20px Times New Roman";
-				ctx.textAlign="center"; ctx.textBaseline="middle"; 
-				ctx.fillText(data, x + 100/2, y + 50/2);
 			}
 			// draw point
-			function draw_pt (x, y, data){
+			function draw_circle (x, y, data){
 				
 				ctx.fillStyle = "LightBlue";
 				ctx.beginPath();
-				ctx.arc(x+50, y+25, 1, 0, 2 * Math.PI, true);
+				ctx.arc(x+50, y+25, 20, 0, 2 * Math.PI, true);
 				ctx.stroke();
-				
-				ctx.fillStyle = "Black";
-				ctx.font = "20px Times New Roman";
-				ctx.textAlign="center"; ctx.textBaseline="middle"; 
-				ctx.fillText(data, x + 100/2, y);
+			}
+
+			// draw big button
+			function draw_bigBt(x, y, data){
+				ctx.fillStyle = "LightBlue";
+				ctx.roundRect(x, y, 200, 150, {upperLeft:10,upperRight:10,lowerLeft:10, lowerRight:10}, 1, true);
 			}
 
 			// Round edges 
