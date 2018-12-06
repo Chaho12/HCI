@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta name="viewport" content = "width = device-width">
+		<meta charset="UTF-8">
+		<meta authors="Jaeho Yoo">
+		<meta copyright="Jaeho Yoo All rights reserved">
+		<title>Graphic Interface Photo Organizer Design</title>
+		<meta http-equiv="refresh" content="200">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	</head>
+	<style>
+		h1{
+			font-family: "Nanum Gothic", sans-serif;
+			font-size: 230%;
+		}
+		h5{
+			font-family: "Nanum Gothic", sans-serif;
+			font-size: 120%;
+		}
+
+		/* home screen css*/
+		.image1{
+			position: absolute;
+			top: 35%;
+			left: 50%;
+			margin-left: -40px;
+			margin-top: -40px;
+		}
+		.image2{
+			position: absolute;
+			top: 65%;
+			left: 50%;
+			margin-left: -40px;
+			margin-top: -40px;	
+		}
+		.lable1{
+			position: absolute;
+			top: 38%;
+			/*left: 50%;*/
+			text-align: center;
+			width: 98%;
+		}
+		.lable2{
+			position: absolute;
+			top: 68%;
+			/*left: 50%;*/
+			text-align: center;
+			width: 98%;
+		}
+
+		/*photoshop pop up menu css*/
+		#confirm {
+			display: none;
+			background-color: white;
+			border: 2px solid black;
+			border-radius: 25px;
+			position: absolute;
+			top: 32%;
+			width: 300px;
+			left: 50%;
+			margin-left: -150px;
+			padding: 8px 10px 10px;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		#confirm button.no {
+			background-color: #F3F3F6;
+			display: inline-block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 100px;
+			cursor: pointer;
+			color: black;
+		}
+		#confirm button.yes {
+			background-color: #5F7CBC;
+			display: inline-block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 100px;
+			cursor: pointer;
+			color: white;
+		}
+
+         #confirm .message {
+            text-align: center;
+            font-family: "Nanum Gothic", sans-serif;
+            font-weight: bold;
+            font-size: 140%;
+         }
+
+         /*sort & search pop up menu css*/
+		#sort {
+			display: none;
+			background-color: white;
+			border: 2px solid black;
+			border-radius: 25px;
+			position: absolute;
+			top: 32%;
+			width: 300px;
+			left: 50%;
+			margin-left: -150px;
+			padding: 8px 10px 10px;
+			box-sizing: border-box;
+			text-align: center;
+		}
+		#sort button.date {
+			background-color: #F3F3F6;
+			display: block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 140px;
+			cursor: pointer;
+			color: black;
+			font-size: 120%;
+			font-family: "Nanum Gothic", sans-serif;
+		}
+		#sort button.loc {
+			background-color: #F3F3F6;
+			display: block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 140px;
+			cursor: pointer;
+			color: black;
+			font-size: 120%;
+			font-family: "Nanum Gothic", sans-serif;
+		}
+		#sort button.cus {
+			background-color: #F3F3F6;
+			display: block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 140px;
+			cursor: pointer;
+			color: black;
+			font-size: 120%;
+			font-family: "Nanum Gothic", sans-serif;
+		}
+		#sort button.ret {
+			background-color: #F3F3F6;
+			display: block;
+			border-radius: 5px;
+			border: 1px solid #aaa;
+			padding: 8px;
+			text-align: center;
+			width: 140px;
+			cursor: pointer;
+			color: black;
+			font-size: 120%;
+			font-family: "Nanum Gothic", sans-serif;
+		}
+
+         #sort .message {
+            text-align: center;
+            font-family: "Nanum Gothic", sans-serif;
+            font-weight: bold;
+            font-size: 160%;
+         }
+
+
+	</style>
+	<body>
+		<br>
+		<h1 align = "center"> AI Photoshopper </h1>
+		
+		<img src = "../images/ps.png" alt="Photoshop" width="80" height="80" class="image1" 
+			onclick='psfunctionConfirm("Image to Photoshop", function yes() {photoshop()})'>
+		<h5 class="lable1" onclick='psfunctionConfirm("Image to Photoshop", function yes() {photoshop()});'> Photoshop </h5>
+	
+		<img src = "../images/ss.png" alt="sort&search" width="80" height="80" class="image2" 
+			onclick='ssfunctionConfirm("Sort images by", function date(){sortSearch("date")}, function loc(){sortSearch("loc")}, function cus(){sortSearch("cus")})'>
+		<h5 class="lable2" onclick='ssfunctionConfirm("Sort images by", function date(){sortSearch("date")}, function loc(){sortSearch("loc")}, function cus(){sortSearch("cus")})'> Sort & Search </h5>
+		
+
+		<div id="confirm">
+			<div class="message"></div>
+			<br>
+			<img src="../images/selfie.jpg" width="234" height="156"/>
+			<br><br>
+			<button class="no"> Cancel </button>
+			<button class="yes"> Confirm </button>
+		</div>
+
+		<div id="sort">
+			<div class="message"></div>
+			<br>
+			<center> 
+				<button class="date"> 1. Date </button>
+				<br>
+				<button class="loc"> 2. Location </button>
+				<br>
+				<button class="cus"> 3. Custom </button>
+				<br>
+				<button class="ret"> Cancel </button>
+			 </center>
+		</div>	
+
+		<script>
+			function photoshop(){
+				window.location.href = "hw4_4_photoshop.html";
+			}
+			function sortSearch(sort){
+
+				window.location.href = "hw4_4_sortsearch.html";
+			}
+
+
+			// photoshop confirm pop up box
+			function psfunctionConfirm(msg, myYes, myNo) {
+				var confirmBox = $("#confirm");
+				confirmBox.find(".message").text(msg);
+				confirmBox.find(".yes,.no").unbind().click(function() {
+					confirmBox.hide();
+					});
+				confirmBox.find(".yes").click(myYes);
+				confirmBox.find(".no").click(myNo);
+				confirmBox.show();
+			}
+			// sort & search confirm pop up box
+			function ssfunctionConfirm(msg, myDate, myLoc, myCus, myRet) {
+				var confirmBox = $("#sort");
+				confirmBox.find(".message").text(msg);
+				confirmBox.find(".date,.loc,.cus,.ret").unbind().click(function() {
+					confirmBox.hide();
+					});
+				confirmBox.find(".date").click(myDate);
+				confirmBox.find(".loc").click(myLoc);
+				confirmBox.find(".cus").click(myCus);
+				confirmBox.find(".ret").click(myRet);
+				confirmBox.show();
+			}
+		
+		</script>
+
+		</script>
+
+
+
+
+
+
+	</body>
+</html>
