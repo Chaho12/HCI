@@ -17,13 +17,13 @@
 		}
 		h5{
 			font-family: "Nanum Gothic", sans-serif;
-			font-size: 120%;
+			font-size: 85%;
 		}
 		h6{
 			font-family: "Nanum Gothic", sans-serif;
-			font-size: 110%;	
+			font-size: 90%;	
 			position: absolute;
-			top: 76%;
+			top: 82%;
 			text-align: center;
 			width: 98%;
 		}
@@ -31,50 +31,64 @@
 		/* home screen css*/
 		.image1{
 			position: absolute;
-			top: 35%;
+			top: 63%;
 			left: 30%;
 			margin-left: -35px;
 			margin-top: -35px;
 		}
 		.image2{
 			position: absolute;
-			top: 35%;
+			top: 63%;
 			left: 70%;
 			margin-left: -35px;
 			margin-top: -35px;	
 		}
 		.image3{
 			position: absolute;
-			top: 62%;
+			top: 77%;
 			left: 30%;
 			margin-left: -35px;
 			margin-top: -35px;	
 		}
 		.image4{
 			position: absolute;
-			top: 62%;
+			top: 77%;
 			left: 70%;
 			margin-left: -35px;
 			margin-top: -35px;	
 		}
+		
+		.baseImage{
+			position: absolute;
+			top: 38%;
+			left: 50%;
+			margin-left: -150px;
+			margin-top: -100px;	
+		}
+		.baseImageLable{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -150px;	
+		}
 
 		.fb{
 			position: absolute;
-			top: 90%;
+			top: 94%;
 			left: 30%;
 			margin-left: -20px;
 			margin-top: -20px;	
 		}
 		.tw{
 			position: absolute;
-			top: 90%;
+			top: 94%;
 			left: 50%;
 			margin-left: -22.5px;
 			margin-top: -22.5px;	
 		}
 		.mail{
 			position: absolute;
-			top: 89.5%;
+			top: 93.5%;
 			left: 70%;
 			margin-left: -25px;
 			margin-top: -25px;	
@@ -83,61 +97,195 @@
 
 		.lable1{
 			position: absolute;
-			top: 38%;
-			left: 25%;
+			top: 62%;
+			left: 24%;
 			margin-left: -15px;
 		}
 		.lable2{
 			position: absolute;
-			top: 38%;
-			left: 75%;
+			top: 62%;
+			left: 74%;
 			margin-left: -40px;
 		}
 		.lable3{
 			position: absolute;
-			top: 65%;
-			left: 25%;
+			top: 76%;
+			left: 27%;
 			margin-left: -40px;
 			
 		}
 		.lable4{
 			position: absolute;
-			top: 65%;
-			left: 75%;
+			top: 76%;
+			left: 74%;
 			margin-left: -35px;
 		}
 
+		/* slider styles*/
+		.slidecontainer {
+			position: absolute;
+			top: 60%;
+			left: 15%;
+			width: 70%;
+		}
+
+		.slider {
+			-webkit-appearance: none;
+			width: 100%;
+			height: 25px;
+			background: #d3d3d3;
+			outline: none;
+			opacity: 0.7;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+		}
+
+		.slider:hover {
+			opacity: 1;
+		}
+
+		.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			background: #4CAF50;
+			cursor: pointer;
+		}
+
+		.slider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: #4CAF50;
+			cursor: pointer;
+		}
+
+		.Return{
+			position: absolute;
+			top: 80%;
+			left: 30%;
+			/*margin-left: -35px;*/
+		}
+		.Apply{
+			position: absolute;
+			top: 80%;
+			right: 30%;
+			/*margin-left: -35px;*/
+		}
 	</style>
 	<body>
 		<br>
 		<h1 align = "center"> AI Photoshopper </h1>
 		<center>
-			<button class="return" onClick='window.location.href = "hw4_4.html"'> Return </button>
+			<button class="Home" onClick='window.location.href = "hw4_4.html"'> Home </button>
+			<button class="changeImage" onClick='alert("Change Image")'> Change Image </button>
+			<button class="save" onClick='alert("Changes Saved")'> Save Image</button>
 		</center>
 
-		<img src = "../images/slimmer.png" alt="slimmer" width="70" height="70" class="image1" onclick='alert("made slimmer")'>
-		<h5 class="lable1" > Slimmer </h5>
-	
-		<img src = "../images/skin.png" alt="skin brightness" width="70" height="70" class="image2" onclick='alert("brighter skin")'>
-		<h5 class="lable2" > Skin </h5>
+		<img src = "../images/selfie.jpg" alt="selfie" width="300" height="200" class="baseImage">
 
-		<img src = "../images/dot.png" alt="dot remover" width="70" height="70" class="image3" onclick='alert("removed dot")'>
+		<img src = "../images/slimmer.png" alt="slimmer" width="50" height="50" class="image1" >
+		<h5 class="lable1" "> Slimmer </h5>
+	
+		<img src = "../images/skin.png" alt="skin brightness" width="50" height="50" class="image2" onclick="skin()">
+		<h5 class="lable2" onclick="skin()"> Skin </h5>
+
+		<img src = "../images/dot.png" alt="dot remover" width="50" height="50" class="image3" onclick='alert("removed dot")'>
 		<h5 class="lable3" > Dot Remover </h5>
 
-		<img src = "../images/etc.png" alt="etc." width="70" height="70" class="image4" onclick='alert("etc tools")'>
+		<img src = "../images/etc.png" alt="etc." width="50" height="50" class="image4" onclick='alert("etc tools")'>
 		<h5 class="lable4" > Etc. </h5>
 
 		<!-- Share SNS -->
-		<h6> Share Image @ SNS </h6>
-		<img src = "../images/fb.png" alt="facebook" width="40" height="40" class="fb" onclick='alert("shared to facebook")'>
+		<h6> Save & Share Image @ SNS </h6>
+		<img src = "../images/fb.png" alt="facebook" width="30" height="30" class="fb" onclick='alert("shared to facebook")'>
 		
-		<img src = "../images/twitter.png" alt="twitter" width="45" height="45" class="tw" onclick='alert("shared to twitter")'>
+		<img src = "../images/twitter.png" alt="twitter" width="35" height="35" class="tw" onclick='alert("shared to twitter")'>
 		
-		<img src = "../images/gmail.png" alt="mail" width="50" height="60" class="mail" onclick='alert("sent to mail")'>
+		<img src = "../images/gmail.png" alt="mail" width="38" height="45" class="mail" onclick='alert("sent to mail")'>
 		
+
+		<!-- Slimmer -->
+		<div class="slidecontainer" style="display: none">
+			<input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+			<p>Value: <span id="demo"></span>%</p>
+		</div>
+		<center>
+			<button class="Return" onClick="returnMenu()" style="display: none"> Return </button>
+			<button class="Apply" onClick="applyImage()" style="display: none"> Apply </button>
+		</center>
+
 	</body>
 
 	<script>
+		var slider = document.getElementById("myRange");
+		var output = document.getElementById("demo");
+		output.innerHTML = slider.value;
 
+		slider.oninput = function() {
+			output.innerHTML = this.value;
+		}
+
+		function hideMenu(){
+			var i1 = document.getElementsByClassName("image1");
+			var l1 = document.getElementsByClassName("lable1");
+			i1[0].style.display = "none";
+			l1[0].style.display = "none";
+			var i2 = document.getElementsByClassName("image2");
+			var l2 = document.getElementsByClassName("lable2");
+			i2[0].style.display = "none";
+			l2[0].style.display = "none";
+			var i3 = document.getElementsByClassName("image3");
+			var l3 = document.getElementsByClassName("lable3");
+			i3[0].style.display = "none";
+			l3[0].style.display = "none";
+			var i4 = document.getElementsByClassName("image4");
+			var l4 = document.getElementsByClassName("lable4");
+			i4[0].style.display = "none";
+			l4[0].style.display = "none";
+		}
+		function showMenu(){
+			var i1 = document.getElementsByClassName("image1");
+			var l1 = document.getElementsByClassName("lable1");
+			i1[0].style.display = "block";
+			l1[0].style.display = "block";
+			var i2 = document.getElementsByClassName("image2");
+			var l2 = document.getElementsByClassName("lable2");
+			i2[0].style.display = "block";
+			l2[0].style.display = "block";
+			var i3 = document.getElementsByClassName("image3");
+			var l3 = document.getElementsByClassName("lable3");
+			i3[0].style.display = "block";
+			l3[0].style.display = "block";
+			var i4 = document.getElementsByClassName("image4");
+			var l4 = document.getElementsByClassName("lable4");
+			i4[0].style.display = "block";
+			l4[0].style.display = "block";
+		}
+
+		function skin(){
+			hideMenu();
+			var slidecontainer = document.getElementsByClassName("slidecontainer");
+			slidecontainer[0].style.display = "block";
+			var returnButton = document.getElementsByClassName("Return");
+			returnButton[0].style.display = "block";
+			var applyImage = document.getElementsByClassName("Apply");
+			applyImage[0].style.display = "block";
+		}
+		function returnMenu(){
+			showMenu();
+			var slidecontainer = document.getElementsByClassName("slidecontainer");
+			slidecontainer[0].style.display = "none";
+			var returnButton = document.getElementsByClassName("Return");
+			returnButton[0].style.display = "none";
+			var applyImage = document.getElementsByClassName("Apply");
+			applyImage[0].style.display = "none";
+		}
+		function applyImage(){
+			var baseImage = document.getElementsByClassName("baseImage");
+			baseImage[0].src = '../images/new_selfie1.jpg';
+		}
+
+		
 	</script>
 </html>
