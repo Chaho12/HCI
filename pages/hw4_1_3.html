@@ -93,14 +93,13 @@
 				if(ge == 4){ size_x = 40; size_y = 40}
 				if(ge == 5){ size_x = 200; size_y = 150}
 
-				if(currentNode.x + rect.left < x && x < currentNode.x + rect.left + size_x
-					&& currentNode.y + rect.top < y && y < currentNode.y + rect.top+ size_y){
+				if(currentNode.x + rect.left < x && x < currentNode.x + rect.left + size_x && currentNode.y + rect.top < y && y < currentNode.y + rect.top+ size_y){
 
 					for(var i = 0; i< currentNode.children.length; i++){
 						recurse(currentNode.children[i]);
 					}
 		
-					if(!selected)
+					if(!selected){
 						alert(currentNode.data+" selected at coordinate " + "x: "+x+" y:"+y);
 						selected = true;
 					}
