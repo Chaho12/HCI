@@ -19,6 +19,14 @@
 			font-family: "Nanum Gothic", sans-serif;
 			font-size: 105%;
 		}
+		h6{
+			font-family: "Nanum Gothic", sans-serif;
+			font-size: 90%;	
+			position: absolute;
+			top: 82%;
+			text-align: center;
+			width: 98%;
+		}
 
 		/* home screen css*/
 		.image1{
@@ -77,6 +85,104 @@
 			margin-left: -35px;
 		}
 
+
+		/* Image Gallery*/
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: Arial;
+		}
+
+		/* The grid: Four equal columns that floats next to each other */
+		.column {
+			float: left;
+			width: 25%;
+			padding: 10px;
+		}
+
+		/* Style the images inside the grid */
+		.column img {
+			opacity: 0.9; 
+			cursor: pointer; 
+		}
+
+		.column img:hover {
+			opacity: 1;
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+
+		/* The expanding image container */
+		.container {
+			position: relative;
+			display: none;
+		}
+
+		/* Expanding image text */
+		#imgtext {
+			position: absolute;
+			bottom: 15px;
+			left: 50%;
+			color: white;
+			font-size: 20px;
+		}
+
+		/* Closable button inside the expanded image */
+		.closebtn {
+			position: absolute;
+			top: 10px;
+			right: 30px;
+			color: white;
+			font-size: 35px;
+			cursor: pointer;
+		}
+
+		.eImage{
+			display: block;
+  			margin-left: auto;
+			margin-right: auto;
+  			width: auto;
+  			height: auto;
+  			max-width: 380px;
+  			max-height: 250px;
+		}
+
+		.lImage{
+			width: auto;
+			height: 50px;
+			max-width: 80px;
+		}
+
+		.fb{
+			position: absolute;
+			top: 94%;
+			left: 30%;
+			margin-left: -20px;
+			margin-top: -20px;	
+		}
+		.tw{
+			position: absolute;
+			top: 94%;
+			left: 50%;
+			margin-left: -22.5px;
+			margin-top: -22.5px;	
+		}
+		.mail{
+			position: absolute;
+			top: 93.5%;
+			left: 70%;
+			margin-left: -25px;
+			margin-top: -25px;	
+		}
+
 	</style>
 	<body>
 
@@ -84,7 +190,9 @@
 		<h1 align = "center"> AI Photoshopper </h1>
 		
 		<center>
-			<button class="return" onClick='window.location.href = "hw4_4.html"'> Return </button>
+			<button class="back" onClick="returnToSearch()"> Back to Search </button>
+			<button class="home" onClick='window.location.href = "hw4_4.html"'> Home </button>
+			<button class="photoshop" onClick='window.location.href = "hw4_4_photoshop.html"' style="display: none"> Photoshop </button>
 		</center>
 
 		<img src = "../images/gangnam.png" alt="gangnam" width="130" height="130" class="image1" onclick="openFolder()">
@@ -99,11 +207,54 @@
 		<img src = "../images/sinchon.png" alt="sinchon" width="130" height="130" class="image4" >
 		<h5 class="lable4" > Sinchon </h5>
 
+		<br><br>
+		<!-- The four columns -->
+		<div class="row" style="display: none; overflow-y: scroll">
+			<div class="column">
+				<img src="../images/gangnam_1.jpg" alt="gangnam_1" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_1.jpg" alt="gangnam_1" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_1.jpg" alt="gangnam_1" onclick="myFunction(this);" class="lImage">
+			</div>
+			<div class="column">
+				<img src="../images/gangnam_2.jpg" alt="gangnam_2" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_2.jpg" alt="gangnam_2" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_2.jpg" alt="gangnam_2" onclick="myFunction(this);" class="lImage">
+				</div>
+			<div class="column">
+				<img src="../images/gangnam_3.jpg" alt="gangnam_3" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_3.jpg" alt="gangnam_3" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_3.jpg" alt="gangnam_3" onclick="myFunction(this);" class="lImage">
+			</div>
+			<div class="column">
+				<img src="../images/gangnam_4.png" alt="gangnam_4" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_4.png" alt="gangnam_4" onclick="myFunction(this);" class="lImage">
+				<img src="../images/gangnam_4.png" alt="gangnam_4" onclick="myFunction(this);" class="lImage">
+			</div>
+		</div>
+
+		<div class="container">
+		<span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+		<img id="expandedImg" class="eImage">
+		<div id="imgtext"></div>
+		</div>
+
+		<!-- Share SNS -->
+		<h6 id="shareMessage" style="display: none"> Save & Share Image @ SNS </h6>
+		
+		<img src = "../images/fb.png" alt="facebook" width="30" height="30" class="fb" onclick='alert("shared to facebook")' style="display: none">
+		
+		<img src = "../images/twitter.png" alt="twitter" width="35" height="35" class="tw" onclick='alert("shared to twitter")' style="display: none">
+		
+		<img src = "../images/gmail.png" alt="mail" width="38" height="45" class="mail" onclick='alert("sent to mail")' style="display: none">
+
 	</body>
 
 	<script>
 		function openFolder(){
 			hideFolders();
+
+			var gangnamFolder = document.getElementsByClassName("row");
+			gangnamFolder[0].style.display = "block";
 		}
 		function hideFolders(){
 			var i1 = document.getElementsByClassName("image1");
@@ -124,5 +275,61 @@
 			l4[0].style.display = "none";
 		}
 		
+		function myFunction(imgs) {
+			var expandImg = document.getElementById("expandedImg");
+			var imgText = document.getElementById("imgtext");
+			expandImg.src = imgs.src;
+			imgText.innerHTML = imgs.alt;
+			expandImg.parentElement.style.display = "block";
+
+			var photoshop = document.getElementsByClassName("photoshop");
+			photoshop[0].style.display = "inline";
+
+			var fb = document.getElementsByClassName("fb");
+			fb[0].style.display = "block";
+			var tw = document.getElementsByClassName("tw");
+			tw[0].style.display = "block";
+			var mail = document.getElementsByClassName("mail");
+			mail[0].style.display = "block";
+			var shareMessage = document.getElementById("shareMessage");
+			shareMessage.style.display = "block";
+
+		}
+		function returnToSearch(){
+			var i1 = document.getElementsByClassName("image1");
+			var l1 = document.getElementsByClassName("lable1");
+			i1[0].style.display = "block";
+			l1[0].style.display = "block";
+			var i2 = document.getElementsByClassName("image2");
+			var l2 = document.getElementsByClassName("lable2");
+			i2[0].style.display = "block";
+			l2[0].style.display = "block";
+			var i3 = document.getElementsByClassName("image3");
+			var l3 = document.getElementsByClassName("lable3");
+			i3[0].style.display = "block";
+			l3[0].style.display = "block";
+			var i4 = document.getElementsByClassName("image4");
+			var l4 = document.getElementsByClassName("lable4");
+			i4[0].style.display = "block";
+			l4[0].style.display = "block";
+
+			var gangnamFolder = document.getElementsByClassName("row");
+			gangnamFolder[0].style.display = "none";
+
+			var container = document.getElementsByClassName("container");
+			container[0].style.display = "none";
+
+			var photoshop = document.getElementsByClassName("photoshop");
+			photoshop[0].style.display = "none";
+
+			var fb = document.getElementsByClassName("fb");
+			fb[0].style.display = "none";
+			var tw = document.getElementsByClassName("tw");
+			tw[0].style.display = "none";
+			var mail = document.getElementsByClassName("mail");
+			mail[0].style.display = "none";
+			var shareMessage = document.getElementById("shareMessage");
+			shareMessage.style.display = "none";
+		}
 	</script>
 </html>
